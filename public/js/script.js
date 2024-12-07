@@ -133,35 +133,58 @@ function openCamera() {
   document.querySelector("input[name=cameraPhoto]").click();
 }
 
-function submitForm() {
+async function submitForm() {
   // Handle form submission
   document.querySelector(".submit-btn").addEventListener("click", async (e) => {
-    e.preventDefault();
+    
+    async function backendMeBhejo() {
 
-
-    try {
-      const response = await fetch("/complaint", {
-        method: "POST"
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        alert(
-          `Complaint submitted successfully!\nPlease take a note of your complaint ID for future reference. ('${data.complaintId}') \n Don't worry it is copied to your clipboard.`
-        );
-        navigator.clipboard.writeText(data.complaintId).catch((err) => {
-          console.warn("Failed to copy complaint ID to clipboard:", err);
+      try {
+        const response = await fetch("/complaint", {
+          method: "POST"
         });
-        e.target.reset(); // Reset form on success
-      } else {
-        throw new Error(data.error || "Failed to submit complaint");
+  
+        const data = await response.json();
+  
+        if (response.ok) {
+          alert(
+            `Complaint submitted successfully!\nPlease take a note of your complaint ID for future reference. ('${data.complaintId}') \n Don't worry it is copied to your clipboard.`
+          );
+          navigator.clipboard.writeText(data.complaintId).catch((err) => {
+            console.warn("Failed to copy complaint ID to clipboard:", err);
+          });
+          e.target.reset(); // Reset form on success
+        } else {
+          throw new Error(data.error || "Failed to submit complaint");
+        }
+      } catch (error) {
+        alert(error.message); 
+        console.error("Error:", error);
       }
-    } catch (error) {
-      alert(error.message);
-      console.error("Error:", error);
     }
+
+    function generateComplaintId() {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      let complaintId = '';
+      for (let i = 0; i < 16; i++) {
+        complaintId += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return complaintId;
+    }
+    
+    let complaintId = generateComplaintId();
+
+    alert(`Thankyou for your complaint. Your complaint ID is ${complaintId}. Please keep it safe for future reference.`);
+
+    
+    
   });
 }
 
-lenis();
+async function main() {
+  lenis();
+  threejs();
+  await submitForm();
+}
+
+main();

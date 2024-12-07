@@ -23,7 +23,7 @@ app.get("/", (req, res) => {
 app.post("/complaint", (req, res) => {
     try {
       // Generate a unique complaint ID
-      const complaintId = Math.random().toString(36).substring(2, 10);
+      
 
       // Handle the uploaded files and form data here
       res.json({
