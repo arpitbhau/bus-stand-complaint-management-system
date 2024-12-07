@@ -198,10 +198,29 @@ async function submitForm() {
   });
 }
 
+function handleFileUploadText() {
+  const fileInput = document.querySelector('input[name="cameraPhoto"]');
+  const fileNameDisplay = document.querySelector('.confirm-photo-text');
+
+  fileInput.addEventListener('change', (e) => {
+    
+    if (e.target.files.length > 0) {
+      fileNameDisplay.textContent = e.target.files[0].name;
+    } else {
+      fileNameDisplay.textContent = 'Upload Complaint Photo';
+    }
+  });
+}
+
+
+
+
+
 async function main() {
   lenis();
-  threejs();
+  // threejs();
   await submitForm();
+  handleFileUploadText();
 }
 
 main();
