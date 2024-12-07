@@ -172,10 +172,27 @@ async function submitForm() {
       return complaintId;
     }
     
-    let complaintId = generateComplaintId();
+    const form = document.querySelector('form');
+    const inputs = form.querySelectorAll('input[required], textarea[required]');
+    let isValid = true;
 
-    alert(`Thankyou for your complaint. Your complaint ID is ${complaintId}. Please keep it safe for future reference.`);
+    inputs.forEach(input => {
+      if (!input.value.trim()) {
+        isValid = false;
+      }
+    });
 
+    if (isValid) {
+      let complaintId = generateComplaintId();
+
+      alert(`Thankyou for your complaint. Your complaint ID is ${complaintId}. Please keep it safe for future reference. Complaint ID is also copied to your clipboard.`);
+
+      navigator.clipboard.writeText(complaintId).catch(err => {
+        console.warn("Failed to copy complaint ID to clipboard:", err);
+      });
+    } else {
+      alert('Please fill in all required fields');
+    }
     
     
   });
