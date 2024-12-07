@@ -135,15 +135,13 @@ function openCamera() {
 
 function submitForm() {
   // Handle form submission
-  document.querySelector("form").addEventListener("submit", async (e) => {
+  document.querySelector(".submit-btn").addEventListener("click", async (e) => {
     e.preventDefault();
 
-    const formData = new FormData(e.target);
 
     try {
       const response = await fetch("/complaint", {
-        method: "POST",
-        body: formData, // FormData handles multipart/form-data for file uploads
+        method: "POST"
       });
 
       const data = await response.json();
