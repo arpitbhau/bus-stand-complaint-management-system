@@ -205,20 +205,17 @@ function handleFileUploadText() {
   fileInput.addEventListener('change', (e) => {
     
     if (e.target.files.length > 0) {
-      fileNameDisplay.textContent = e.target.files[0].name;
+      const fileName = e.target.files[0].name;
+      fileNameDisplay.textContent = fileName.length > 6 ? fileName.substring(0, 6) : fileName;
     } else {
       fileNameDisplay.textContent = 'Upload Complaint Photo';
     }
   });
 }
 
-
-
-
-
 async function main() {
   lenis();
-  // threejs();
+  threejs();
   await submitForm();
   handleFileUploadText();
 }
