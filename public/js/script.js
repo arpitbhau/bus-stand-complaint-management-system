@@ -130,7 +130,7 @@ function lenis() {
 
 function openCamera() {
   // Trigger the camera input when camera button is clicked
-  document.querySelector("input[name=cameraPhoto]").click();
+  document.querySelector("input[name=image]").click();
 }
 
 async function submitForm() {
@@ -185,11 +185,13 @@ async function submitForm() {
     if (isValid) {
       let complaintId = generateComplaintId();
 
-      alert(`Thankyou for your complaint. Your complaint ID is ${complaintId}. Please keep it safe for future reference. Complaint ID is also copied to your clipboard.`);
-
       navigator.clipboard.writeText(complaintId).catch(err => {
         console.warn("Failed to copy complaint ID to clipboard:", err);
       });
+      
+      alert(`Thankyou for your complaint. Your complaint ID is ${complaintId}. Please keep it safe for future reference. Complaint ID is also copied to your clipboard.`);
+
+      
     } else {
       alert('Please fill in all required fields');
     }
@@ -199,7 +201,7 @@ async function submitForm() {
 }
 
 function handleFileUploadText() {
-  const fileInput = document.querySelector('input[name="cameraPhoto"]');
+  const fileInput = document.querySelector('input[name="image"]');
   const fileNameDisplay = document.querySelector('.confirm-photo-text');
 
   fileInput.addEventListener('change', (e) => {
@@ -212,6 +214,10 @@ function handleFileUploadText() {
     }
   });
 }
+
+
+
+
 
 async function main() {
   lenis();
