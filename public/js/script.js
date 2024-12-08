@@ -130,7 +130,7 @@ function lenis() {
 
 function openCamera() {
   // Trigger the camera input when camera button is clicked
-  document.querySelector("input[name=image]").click();
+  document.querySelector("input[name=complaintCamera]").click();
 }
 
 async function submitForm() {
@@ -201,17 +201,18 @@ async function submitForm() {
 }
 
 function handleFileUploadText() {
-  const fileInput = document.querySelector('input[name="image"]');
+  const fileInput = document.querySelectorAll('.complaint-photo-input');
   const fileNameDisplay = document.querySelector('.confirm-photo-text');
 
-  fileInput.addEventListener('change', (e) => {
+  fileInput.forEach(input => {
+    input.addEventListener('change', (e) => {
     
     if (e.target.files.length > 0) {
-      const fileName = e.target.files[0].name;
-      fileNameDisplay.textContent = fileName.length > 6 ? fileName.substring(0, 6) : fileName;
-    } else {
-      fileNameDisplay.textContent = 'Upload Complaint Photo';
-    }
+        const isCameraInput = e.target.hasAttribute('capture');
+        const displayText = isCameraInput ? 'Uploaded from Camera' : 'Uploaded from File';
+        fileNameDisplay.textContent = displayText;
+      }
+    });
   });
 }
 
@@ -221,7 +222,7 @@ function handleFileUploadText() {
 
 async function main() {
   lenis();
-  threejs();
+  //threejs();
   await submitForm();
   handleFileUploadText();
 }
